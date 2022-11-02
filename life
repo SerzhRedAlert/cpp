@@ -148,8 +148,8 @@ int main() {
 	}*/
 	ll t;
 	/*f (g == "one") {*/
-	cout << "Укажите время обновления таблицы в миллсекундах(одно число)" << endl;
-	cin >> t;
+		cout << "Укажите время обновления таблицы в миллсекундах(одно число)" << endl;
+		cin >> t;
 	/*}*/
 	system("cls");
 	if (flag == 1) {
@@ -157,14 +157,14 @@ int main() {
 		general(a, b);
 		printspace(a, b);
 		/*if (flag5 == 0) {*/
-		Sleep(1000);
+			Sleep(1000);
 		/*}*/
 	}
 	if (flag == 0) {
-		cout << "шаг №" << " " << 0 << endl;
+		cout <<"шаг №" << " " << 0 << endl;
 		printspace(a, b);
 		/*if (flag5 == 0) {*/
-		Sleep(1000);
+			Sleep(1000);
 		/*}*/
 	}
 	system("cls");
@@ -188,7 +188,7 @@ int main() {
 			}
 		}
 		/*if (flag5 == 0) {*/
-		Sleep(t);
+			Sleep(t);
 		/*}*/
 		++as;
 		system("cls");
