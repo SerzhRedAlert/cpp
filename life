@@ -1,0 +1,198 @@
+#include <ctime>
+#include <cstdio>
+#include <random>
+#include <iostream>
+#include <windows.h>
+#define ll long long
+using namespace std;
+ll space[10000][10000];
+ll space1[10000][10000];
+ll cheakRule(ll i, ll j) {
+	ll ans = 0;
+	if (space[i - 1][j] == 1) {
+		++ans;
+	}
+	if (space[i][j - 1] == 1) {
+		++ans;
+	}
+	if (space[i + 1][j] == 1) {
+		++ans;
+	}
+	if (space[i][j + 1] == 1) {
+		++ans;
+	}
+	if (space[i - 1][j - 1] == 1) {
+		++ans;
+	}
+	if (space[i + 1][j - 1] == 1) {
+		++ans;
+	}
+	if (space[i + 1][j + 1]) {
+		++ans;
+	}
+	if (space[i - 1][j + 1] == 1) {
+		++ans;
+	}
+	if (ans == 3 && space[i][j] == 0) {
+		space1[i][j] = 1;
+	}
+	if ((ans == 2 || ans == 3) && space[i][j] == 1) {
+		space1[i][j] = 1;
+	}
+	if ((ans < 2 || ans > 3) && space[i][j] == 1) {
+		space1[i][j] = 0;
+	}
+	return space1[i][j];
+}
+void printspace(ll a, ll b) {
+	for (ll i = 2; i <= b + 2; ++i) {
+		cout << "_";
+	}
+	cout << endl;
+	for (ll i = 1; i <= a; ++i) {
+		cout << "|";
+		for (ll j = 1; j <= b + 1; ++j) {
+			if (j == b + 1) {
+				cout << "|";
+			}
+			if (space[i][j] == 1) {
+				cout << "*";
+			}
+			if (space[i][j] == 0) {
+				cout << " ";
+			}
+		}
+		cout << endl;
+	}
+	for (ll i = 2; i < b + 2; ++i) {
+		cout << "_";
+	}
+	cout << endl;
+}
+void printspace1(ll a, ll b) {
+	for (ll i = 2; i <= b + 2; ++i) {
+		cout << "_";
+	}
+	cout << endl;
+	for (ll i = 1; i <= a; ++i) {
+		cout << "|";
+		for (ll j = 1; j <= b + 1; ++j) {
+			if (j == b + 1) {
+				cout << "|";
+			}
+			if (space1[i][j] == 1) {
+				cout << "*";
+			}
+			if (space1[i][j] == 0) {
+				cout << " ";
+			}
+		}
+		cout << endl;
+	}
+	for (ll i = 2; i <= b + 2; ++i) {
+		cout << "_";
+	}
+	cout << endl;
+}
+void general(ll a, ll b) {
+	for (ll i = 1; i <= a; ++i) {
+		for (ll j = 1; j <= b; ++j) {
+			space[i][j] = rand() % 2;
+		}
+	}
+}
+int main() {
+	setlocale(LC_ALL, "Russian");
+	cout << "Напиши здесь размеры поля типа a, b(a - строки, b - столбцы)." << endl;
+	ll a, b;
+	cin >> a >> b;
+	string v;
+	cout << "Как ты будешь располагать живые клетки?(one, с помощью рандома; two, вписать координаты самому)." << endl;
+	cin >> v;
+	bool flag = 0;
+	if (v == "one") {
+		flag = 1;
+	}
+	if (v == "two") {
+		flag = 0;
+		cout << "Напиши здесь координаты типа a, b(a - строки, b - столбцы)," << endl;
+		cout << "в которых будут находиться живые клетки(напиши stop на отдельной строчке, чтобы закончить)." << endl;
+		string a1, a2;
+		while (true) {
+			cin >> a1;
+			if (a1 == "stop") {
+				break;
+			}
+			else {
+				cin >> a2;
+				const char* c_inp = a1.c_str();
+				ll s1 = atoi(c_inp);
+				const char* c_inp1 = a2.c_str();
+				ll s2 = atoi(c_inp1);
+				for (ll i = 1; i <= a; ++i) {
+					for (ll j = 1; j <= b; ++j) {
+						if (i == s1 && j == s2) {
+							space[i][j] = 1;
+						}
+					}
+				}
+			}
+		}
+	}
+	/*cout << "Как вы хотите переключать слайды?(one - автоматически, two - комбинация ctrl + Z)" << endl;
+	string g;
+	cin >> g;
+	bool flag5 = 0;*/
+	/*if (g == "two") {
+		flag5 = 1;
+	}*/
+	ll t;
+	/*f (g == "one") {*/
+	cout << "Укажите время обновления таблицы в миллсекундах(одно число)" << endl;
+	cin >> t;
+	/*}*/
+	system("cls");
+	if (flag == 1) {
+		cout << "шаг №" << " " << 0 << endl;
+		general(a, b);
+		printspace(a, b);
+		/*if (flag5 == 0) {*/
+		Sleep(1000);
+		/*}*/
+	}
+	if (flag == 0) {
+		cout << "шаг №" << " " << 0 << endl;
+		printspace(a, b);
+		/*if (flag5 == 0) {*/
+		Sleep(1000);
+		/*}*/
+	}
+	system("cls");
+	ll as = 1;
+	for (ll i = 1; i <= a; ++i) {
+		for (ll j = 1; j <= b; ++j) {
+			space1[i][j] = space[i][j];
+		}
+	}
+	while (true) {
+		cout << "шаг №" << " " << as << endl;
+		for (ll i = 1; i <= a; ++i) {
+			for (ll j = 1; j <= b; ++j) {
+				cheakRule(i, j);
+			}
+		}
+		printspace1(a, b);
+		for (ll i = 1; i <= a; ++i) {
+			for (ll j = 1; j <= b; ++j) {
+				space[i][j] = space1[i][j];
+			}
+		}
+		/*if (flag5 == 0) {*/
+		Sleep(t);
+		/*}*/
+		++as;
+		system("cls");
+	}
+	return 0;
+}
+// code has been made on Earth by humans
